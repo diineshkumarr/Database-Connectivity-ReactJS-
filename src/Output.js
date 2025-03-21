@@ -9,7 +9,7 @@ const Output = () => {
 
   useEffect(() => {
     // Fetch contacts from backend
-    axios.get('http://localhost:5000/api/contact')
+    axios.get('https://database-conectivity.vercel.app/api/contact')
       .then(response => {
         setContacts(response.data);  // Save the contacts data to state
       })
@@ -26,7 +26,7 @@ const Output = () => {
 
   const handleDelete = (id) => {
     // Handle delete operation
-    axios.delete(`http://localhost:5000/api/contact/${id}`)
+    axios.delete(`https://database-conectivity.vercel.app/api/contact/${id}`)
       .then(response => {
         setContacts(contacts.filter(contact => contact._id !== id)); // Remove the deleted contact from the state
         alert('Contact deleted successfully');
@@ -39,7 +39,7 @@ const Output = () => {
 
   const handleUpdate = () => {
     // Update the contact on the server
-    axios.put(`http://localhost:5000/api/contact/${editingContact._id}`, editingContact)
+    axios.put(`https://database-conectivity.vercel.app/api/contact/${editingContact._id}`, editingContact)
       .then(response => {
         setContacts(contacts.map(contact => (contact._id === editingContact._id ? response.data : contact))); // Update the contact in state
         setEditingContact(null);  // Reset the editing form
