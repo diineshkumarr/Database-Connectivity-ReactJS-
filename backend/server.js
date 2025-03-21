@@ -7,14 +7,19 @@ const bodyParser = require('body-parser');
 // Initialize express
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS setup (allowing frontend running on localhost:3000)
+app.use(cors({
+  origin: 'http://localhost:3000',  // Explicitly allow requests from the frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
+
 app.use(bodyParser.json());
 
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/contact', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+  .catch(err => console.log('MongoDB connection error:', err));
 
 // Create a schema and model for the Contact form
 const contactSchema = new mongoose.Schema({
@@ -43,6 +48,33 @@ app.post('/api/contact', (req, res) => {
     .then(() => res.json({ msg: 'Message saved successfully!' }))
     .catch(err => res.status(400).json({ error: err.message }));
 });
+
+// Define API route to fetch all contacts (GET)
+app.get('/api/contact', (req, res) => {
+  Contact.find()
+    .then(contacts => res.json(contacts))  // Send contacts as JSON
+    .catch(err => res.status(500).json({ error: 'Error fetching contacts' }));
+});
+
+// Edit a contact by ID
+app.put('/api/contact/:id', (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, username, email, message } = req.body;
+
+  Contact.findByIdAndUpdate(id, { firstName, lastName, username, email, message }, { new: true })
+    .then(updatedContact => res.json(updatedContact))
+    .catch(err => res.status(400).json({ error: err.message }));
+});
+
+// Delete a contact by ID
+app.delete('/api/contact/:id', (req, res) => {
+  const { id } = req.params;
+
+  Contact.findByIdAndDelete(id)
+    .then(() => res.json({ message: 'Contact deleted successfully' }))
+    .catch(err => res.status(400).json({ error: err.message }));
+});
+
 
 // Start the server
 const PORT = 5000;

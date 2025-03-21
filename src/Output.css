@@ -1,0 +1,28 @@
+.list-data{
+    border: 2px solid black;
+    margin-top: 10px;
+    list-style: none;
+    padding: 20px;
+    background-color: white;
+    color: black;
+}
+.email-form{
+    text-decoration: none;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  button:active {
+    background-color: #3e8e41;
+  }
+  
