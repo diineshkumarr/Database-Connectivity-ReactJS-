@@ -9,7 +9,7 @@ const app = express();
 
 // CORS setup (allowing frontend running on localhost:3000)
 app.use(cors({
-  origin: 'http://localhost:3000',  // Explicitly allow requests from the frontend
+  origin: 'https://database-conectivity.vercel.app',  // Explicitly allow requests from the frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));

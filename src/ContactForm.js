@@ -26,7 +26,7 @@ const ContactForm = () => {
     e.preventDefault();
     try {
       // Make the POST request to the backend API to save the contact message
-      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      const response = await axios.post('https://database-conectivity.vercel.app/api/contact', formData);
       
       
       if (response.status === 200) {
